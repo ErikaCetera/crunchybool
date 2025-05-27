@@ -2,10 +2,11 @@ package org.lessons.java.crunchybool.model;
 
 import java.util.List;
 
-import org.springframework.data.annotation.Id;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+
+import jakarta.persistence.Id;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -44,7 +45,7 @@ public class Anime {
     private Integer episode;
 
     @Min(value = 1, message = "deve avere almeno una stagione.")
-    private Integer season;
+    private Integer seasons;
 
     private String image;
 
@@ -100,11 +101,11 @@ public class Anime {
     public void setEpisode(Integer episode) {
         this.episode = episode;
     }
-    public Integer getSeason() {
-        return season;
+    public Integer getSeasons() {
+        return seasons;
     }
-    public void setSeason(Integer season) {
-        this.season = season;
+    public void setSeasons(Integer seasons) {
+        this.seasons = seasons;
     }
     public String getImage() {
         return image;
