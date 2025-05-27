@@ -45,8 +45,8 @@ public class AnimeService {
     }
 
     // cerca per titolo e titolo originale
-    public List<Anime> findByName(String title, String originalTitle) {
-        return animeRepository.findByTitleContainingIgnoreCaseOrOriginalTitleContainingIgnoreCase(title, originalTitle);
+    public List<Anime> findByName(String name) {
+        return animeRepository.findByTitleContainingIgnoreCaseOrOriginalTitleContainingIgnoreCase(name, name);
     }
 
     // crea nuovo anime
