@@ -10,11 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("/animes")
 public class AnimeController {
     
     @Autowired
@@ -27,4 +28,11 @@ public class AnimeController {
         return "animes/index";
     }
     
+
+    @GetMapping("/{id}")
+    public String show(Model model, @PathVariable("id") Integer id) {
+        Anime anime = animeService.getById(id);
+        model.addAttribute("anime", anime);
+        return "animes/show";
+    }
 }
