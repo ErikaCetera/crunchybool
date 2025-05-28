@@ -6,11 +6,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import jakarta.validation.Valid;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.lessons.java.crunchybool.model.Anime;
 import org.lessons.java.crunchybool.model.Review;
-import org.lessons.java.crunchybool.repository.ReviewRepository;
 import org.lessons.java.crunchybool.service.AnimeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,8 +27,6 @@ public class AnimeController {
     
     @Autowired
     private AnimeService animeService;
-    @Autowired
-    private ReviewRepository reviewRepository;
 
     @GetMapping
     public String index(Model model) {
@@ -97,5 +93,14 @@ public class AnimeController {
         return "redirect:/animes";
     }
 
+    // Metodo per mostrare il form di creazione/modifica di una recensione di un anime specifico
+    @GetMapping("/{id}/review")
+    public String review(@PathVariable Integer id, Model model) {
+        Review review = new Review();
+        // Collega l'offerta alla pizza selezionata
+        review.setAnime(animeService.getById(id));
+        model.addAttribute("review", review);
+        return "reviews/create-or-edit";
+    }
 
 }

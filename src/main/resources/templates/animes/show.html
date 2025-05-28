@@ -30,6 +30,40 @@
                     </div>
                 </div>
             </section>
+
+            <section>
+    <div class="col text-center" th:unless="${anime.reviews.size() > 0}">
+        <h5>Nessuna recensione disponibile per questo anime</h5>
+    </div>
+
+    <div class="col" th:if="${anime.reviews.size() > 0}">
+        <h5 class="text-center mb-4">Recensioni degli utenti</h5>
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card mb-3" th:each="review : ${anime.reviews}">
+                    <div class="card-body">
+                        <h5 class="card-title">[[${review.username}]]</h5>
+                        <p class="card-text">[[${review.description}]]</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="badge bg-primary">Voto: [[${review.rating}]] ⭐</span>
+                            <div>
+                                <form th:action="@{|/reviews/delete/${review.id}|}" method="post" class="d-inline">
+                                    <button type="submit" class="btn btn-danger btn-sm">Elimina</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <div class="text-center mt-4">
+        <a th:href="@{/animes/{id}/review(id=${anime.id})}" class="btn btn-success btn-sm">Scrivi una recensione</a>
+    </div>
+</section>
+
     </main>
 
 
