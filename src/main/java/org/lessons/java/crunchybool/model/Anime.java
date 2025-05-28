@@ -50,7 +50,7 @@ public class Anime {
     private String image;
 
     //relazione con recensioni
-    @OneToMany(mappedBy = "anime", cascade = {CascadeType.REMOVE})
+    @OneToMany(mappedBy = "anime")
     private List<Review> reviews;
 
     //relazione con generi

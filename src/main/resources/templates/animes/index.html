@@ -35,7 +35,32 @@
                     <div class="d-flex justify-content-around">
                         <a th:href="@{/animes/{id}(id=${anime.id})}" class="btn btn-primary m-2  btn-sm">Dettagli</a>
                         <a th:href="@{/animes/edit/{id}(id=${anime.id})}" class="btn btn-success m-2 btn-sm">Modifica</a>
+                        <a class="btn btn-danger m-2 btn-sm"  data-bs-toggle="modal" th:data-bs-target="'#delete-modal-' + ${anime.id}"> Elimina</a>
                     </div>
+
+                    <div class="modal" tabindex="-1" th:id="'delete-modal-' + ${anime.id}">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">[[${anime.title}]]</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>Sicuro di voler eliminare questo titolo?</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Annulla</button>
+                                            <form th:action="@{/animes/delete/{id}(id=${anime.id})}" method="post">
+                                                <button type="submit" class="btn btn-danger">Elimina
+                                                definitivamente</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                 </div>
             </div>
         </div>

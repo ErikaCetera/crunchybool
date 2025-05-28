@@ -6,8 +6,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import jakarta.validation.Valid;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.lessons.java.crunchybool.model.Anime;
+import org.lessons.java.crunchybool.model.Review;
+import org.lessons.java.crunchybool.repository.ReviewRepository;
 import org.lessons.java.crunchybool.service.AnimeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,6 +29,8 @@ public class AnimeController {
     
     @Autowired
     private AnimeService animeService;
+    @Autowired
+    private ReviewRepository reviewRepository;
 
     @GetMapping
     public String index(Model model) {
@@ -84,4 +89,13 @@ public class AnimeController {
         animeService.update(formAnime);
         return "redirect:/animes";
     }
+
+    @PostMapping("/delete/{id}")
+    public String delete(@PathVariable Integer id) {
+        Anime anime = animeService.getById(id);
+        animeService.delete(anime);
+        return "redirect:/animes";
+    }
+
+
 }

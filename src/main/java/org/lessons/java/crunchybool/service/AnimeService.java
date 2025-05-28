@@ -54,12 +54,12 @@ public class AnimeService {
         return animeRepository.save(anime);
     }
 
-    // aggiorna un anime
+    // aggiorna anime
     public Anime update(Anime anime) {
         return animeRepository.save(anime);
     }
 
-    // Elimina un anime, compresi generi e recensioni associati
+    // Elimina anime, comprese recensioni associate
     public void delete(Anime anime) {
 
         for (Review reviewToDelete : anime.getReviews()) {
@@ -69,7 +69,7 @@ public class AnimeService {
         animeRepository.delete(anime);
     }
 
-    // Elinima un anume tramite id
+    // Elinima anime tramite id
     public void deleteById(Integer id) {
         Anime anime = getById(id);
 
