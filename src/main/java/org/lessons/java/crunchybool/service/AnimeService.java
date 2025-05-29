@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import jakarta.persistence.EntityNotFoundException;
+
 @Service
 public class AnimeService {
 
@@ -39,7 +41,7 @@ public class AnimeService {
     public Anime getById(Integer id) {
         Optional<Anime> animeAttempt = animeRepository.findById(id);
         if (animeAttempt.isEmpty()) {
-            // aggiungere response entity
+            throw new EntityNotFoundException("Anime non trovato!");
         }
         return animeAttempt.get();
     }

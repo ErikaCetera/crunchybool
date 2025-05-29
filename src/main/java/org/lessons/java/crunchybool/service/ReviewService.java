@@ -8,10 +8,13 @@ import org.lessons.java.crunchybool.repository.ReviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import jakarta.persistence.EntityNotFoundException;
+
 @Service
 public class ReviewService {
-    
-    @Autowired ReviewRepository reviewRepository;
+
+    @Autowired
+    ReviewRepository reviewRepository;
 
     public List<Review> findAll() {
         return reviewRepository.findAll();
@@ -28,9 +31,13 @@ public class ReviewService {
     public Review getById(Integer id) {
         Optional<Review> reviewAttempt = reviewRepository.findById(id);
         if (reviewAttempt.isEmpty()) {
-            // aggiungere response entity
+            throw new EntityNotFoundException("Recensione non trovata!");
         }
         return reviewAttempt.get();
+    }
+
+    public Integer getAverageRating(Integer animeId) {
+        return reviewRepository.findAverageRatingByAnimeId(animeId);
     }
 
     public void deleteById(Integer id) {

@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import jakarta.persistence.EntityNotFoundException;
+
 @Service
 public class GenreService {
 
@@ -35,7 +37,7 @@ public class GenreService {
     public Genre getById(Integer id) {
         Optional<Genre> genreAttempt = genreRepository.findById(id);
         if (genreAttempt.isEmpty()) {
-            // aggiungere response entity
+            throw new EntityNotFoundException("Genere non trovato!");
         }
         return genreAttempt.get();
     }

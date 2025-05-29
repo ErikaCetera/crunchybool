@@ -10,6 +10,7 @@ import java.util.List;
 import org.lessons.java.crunchybool.model.Anime;
 import org.lessons.java.crunchybool.model.Review;
 import org.lessons.java.crunchybool.service.AnimeService;
+import org.lessons.java.crunchybool.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,28 +20,32 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-
-
 @Controller
 @RequestMapping("/animes")
 public class AnimeController {
-    
+
     @Autowired
     private AnimeService animeService;
+    @Autowired
+    private ReviewService reviewService;
 
     @GetMapping
     public String index(Model model) {
-        List<Anime> animes =  animeService.findAllSorteByName();
+        List<Anime> animes = animeService.findAllSorteByName();
+
         model.addAttribute("animes", animes);
         return "animes/index";
     }
-    
 
     @GetMapping("/{id}")
     public String show(Model model, @PathVariable("id") Integer id) {
         Anime anime = animeService.getById(id);
+        Integer averageRating = reviewService.getAverageRating(anime.getId());
+
+
         model.addAttribute("anime", anime);
         model.addAttribute("genres", anime.getGenres());
+        model.addAttribute("averageRating", averageRating);
         return "animes/show";
     }
 
@@ -72,7 +77,7 @@ public class AnimeController {
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable("id") Integer id, Model model) {
         model.addAttribute("anime", animeService.getById(id));
-        
+
         return "animes/create-or-edit";
     }
 
@@ -94,7 +99,8 @@ public class AnimeController {
         return "redirect:/animes";
     }
 
-    // Metodo per mostrare il form di creazione/modifica di una recensione di un anime specifico
+    // Metodo per mostrare il form di creazione/modifica di una recensione di un
+    // anime specifico
     @GetMapping("/{id}/review")
     public String review(@PathVariable Integer id, Model model) {
         Review review = new Review();
