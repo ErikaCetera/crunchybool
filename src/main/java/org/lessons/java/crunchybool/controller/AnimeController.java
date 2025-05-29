@@ -10,6 +10,7 @@ import java.util.List;
 import org.lessons.java.crunchybool.model.Anime;
 import org.lessons.java.crunchybool.model.Review;
 import org.lessons.java.crunchybool.service.AnimeService;
+import org.lessons.java.crunchybool.service.GenreService;
 import org.lessons.java.crunchybool.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,6 +29,8 @@ public class AnimeController {
     private AnimeService animeService;
     @Autowired
     private ReviewService reviewService;
+    @Autowired
+    private GenreService genreService;
 
     @GetMapping
     public String index(Model model) {
@@ -59,6 +62,7 @@ public class AnimeController {
     @GetMapping("/create")
     public String create(Model model) {
         model.addAttribute("anime", new Anime());
+        model.addAttribute("genres", genreService.findAllSorteByName());
 
         return "animes/create-or-edit";
     }
@@ -77,13 +81,14 @@ public class AnimeController {
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable("id") Integer id, Model model) {
         model.addAttribute("anime", animeService.getById(id));
+        model.addAttribute("edit", true);
 
         return "animes/create-or-edit";
     }
 
     @PostMapping("/edit/{id}")
     public String update(
-            @Valid @ModelAttribute("pizza") Anime formAnime, BindingResult bindingResult, Model model) {
+            @Valid @ModelAttribute("anime") Anime formAnime, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
 
             return "animes/create-or-edit";

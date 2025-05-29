@@ -50,6 +50,7 @@ public class Anime {
 
     //relazione con recensioni
     @OneToMany(mappedBy = "anime")
+    @JsonManagedReference
     private List<Review> reviews;
 
     //relazione con generi

@@ -1,6 +1,9 @@
 package org.lessons.java.crunchybool.model;
 
 import jakarta.persistence.Id;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -30,7 +33,8 @@ public class Review {
 
     //relazione con anime
     @ManyToOne
-    @JoinColumn(name = "anime_id", nullable = false)//chiave esterna
+    @JoinColumn(name = "anime_id", nullable = false)
+    @JsonBackReference
     private Anime anime;
 
     

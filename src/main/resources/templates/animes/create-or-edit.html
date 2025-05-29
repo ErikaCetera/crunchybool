@@ -12,7 +12,7 @@
 <body>
     <main>
         <div class="my-5 text-center" th:if="${edit}">
-            <h1>Aggiorna [[${offer.pizza.name}]]</h1>
+            <h1>Aggiorna [[${anime.title}]]</h1>
         </div>
         <div class="my-5 text-center" th:unless="${edit}">
             <h1>Inserisci nuovo anime </h1>
@@ -65,6 +65,17 @@
                             <ul>
                                 <li th:each="error : ${#fields.errors('production')}" th:text="${error}"></li>
                             </ul>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Generi:</label>
+                        <div>
+                            <th:block th:each="genre : ${genres}">
+                                <input type="checkbox" th:value="${genre.id}" th:field="*{genres}"
+                                    id="genre-+${genre.id}">
+                                <label th:for="'genre-'+${genre.id}" th:text="${genre.name}"></label>
+                            </th:block>
                         </div>
                     </div>
 

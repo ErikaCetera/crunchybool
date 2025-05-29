@@ -34,6 +34,10 @@ public class GenreService {
         return genreRepository.findAll(Sort.by("name"));
     }
 
+    public Optional<Genre> findById(Integer id) {
+        return genreRepository.findById(id);
+    }
+
     public Genre getById(Integer id) {
         Optional<Genre> genreAttempt = genreRepository.findById(id);
         if (genreAttempt.isEmpty()) {

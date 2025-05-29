@@ -1,0 +1,48 @@
+package org.lessons.java.crunchybool.controller;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.lessons.java.crunchybool.model.Review;
+import org.lessons.java.crunchybool.service.ReviewService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import jakarta.persistence.EntityNotFoundException;
+
+@RestController
+@RequestMapping("/api/reviews")
+public class ReviewRestController {
+
+    @Autowired
+    private ReviewService reviewService;
+
+    @GetMapping
+    public List<Review> index() {
+        return reviewService.findAll();
+    }
+
+    @PostMapping
+    public ResponseEntity<Review> store(@RequestBody Review review) {
+        return new ResponseEntity<>(reviewService.create(review), HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Integer id) {
+        if (reviewService.findById(id).isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        reviewService.deleteById(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+}
