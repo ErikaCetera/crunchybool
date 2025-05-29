@@ -40,6 +40,7 @@ public class AnimeController {
     public String show(Model model, @PathVariable("id") Integer id) {
         Anime anime = animeService.getById(id);
         model.addAttribute("anime", anime);
+        model.addAttribute("genres", anime.getGenres());
         return "animes/show";
     }
 

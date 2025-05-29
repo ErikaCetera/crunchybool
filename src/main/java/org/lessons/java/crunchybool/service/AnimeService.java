@@ -60,16 +60,6 @@ public class AnimeService {
     }
 
     // Elimina anime, comprese recensioni associate
-    public void delete(Anime anime) {
-
-        for (Review reviewToDelete : anime.getReviews()) {
-            reviewRepository.delete(reviewToDelete);
-        }
-
-        animeRepository.delete(anime);
-    }
-
-    // Elinima anime tramite id
     public void deleteById(Integer id) {
         Anime anime = getById(id);
 
@@ -80,6 +70,11 @@ public class AnimeService {
         animeRepository.delete(anime);
     }
 
+    public void delete(Anime anime) {
+        deleteById(anime.getId());
+    }
+
+    
     public Boolean existsById(Integer id) {
         return animeRepository.existsById(id);
     }
