@@ -17,7 +17,7 @@
             <input type="text" name="name" placeholder="Cerca genere..." class="form-control">
             <button type="submit" class="btn btn-primary">Cerca</button>
         </form>
-        <a th:href="@{/genres/create}" class="btn btn-primary">
+        <a th:href="@{/genres/create}" class="btn btn-primary" sec:authorize="hasAuthority('ADMIN')">
             Aggiungi nuovo genere
         </a>
     </div>
@@ -38,7 +38,7 @@
                     <td>[[*{name}]]</td>
                     <td >
                         <button type="button" class="btn btn-danger m-2 btn-sm" data-bs-toggle="modal"
-                            th:data-bs-target="'#delete-modal-' + ${genre.id}">
+                            th:data-bs-target="'#delete-modal-' + ${genre.id}" sec:authorize="hasAuthority('ADMIN')">
                             Elimina
                         </button>
                     </td>

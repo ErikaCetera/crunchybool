@@ -1,7 +1,6 @@
 package org.lessons.java.crunchybool.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.lessons.java.crunchybool.model.Review;
 import org.lessons.java.crunchybool.service.ReviewService;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import jakarta.persistence.EntityNotFoundException;
 
 @RestController
 @RequestMapping("/api/reviews")

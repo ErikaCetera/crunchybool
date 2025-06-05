@@ -20,6 +20,10 @@ public class ReviewService {
         return reviewRepository.findAll();
     }
 
+    public Optional<Review> findById(Integer id) {
+        return reviewRepository.findById(id);
+    }
+
     public Review create(Review offer) {
         return reviewRepository.save(offer);
     }

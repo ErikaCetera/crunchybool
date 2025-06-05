@@ -54,7 +54,7 @@
                                     <div>
                                         <form th:action="@{|/reviews/delete/${review.id}|}" method="post"
                                             class="d-inline">
-                                            <button type="submit" class="btn btn-danger btn-sm">Elimina</button>
+                                            <button type="submit" class="btn btn-danger btn-sm"  sec:authorize="hasAuthority('ADMIN')">Elimina</button>
                                         </form>
                                     </div>
                                 </div>
