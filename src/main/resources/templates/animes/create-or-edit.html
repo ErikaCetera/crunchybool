@@ -9,118 +9,96 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
 </head>
 
-<body>
-    <main>
+<body class="bg-dark text-light">
+    <main class="container mt-5">
+        <div th:insert="fragments/navbar :: navbar"></div>
+
+        <!-- Titolo dinamico -->
         <div class="my-5 text-center" th:if="${edit}">
-            <h1>Aggiorna [[${anime.title}]]</h1>
+            <h1 class="text-warning">Aggiorna [[${anime.title}]]</h1>
         </div>
         <div class="my-5 text-center" th:unless="${edit}">
-            <h1>Inserisci nuovo anime </h1>
+            <h1 class="text-info">Inserisci nuovo anime</h1>
         </div>
+
         <div class="row justify-content-center">
-            <div class="col-8">
-                <form th:action="${edit} ? @{|/animes/edit/${anime.id}|} : @{/animes/create}" method="post"
-                    id="form-offer" th:object="${anime}" class="mb-2">
-                    <input type="hidden" th:field="*{id}">
+            <div class="col-md-8">
+                <div class="card bg-secondary text-light border-light p-4">
+                    <form th:action="${edit} ? @{|/animes/edit/${anime.id}|} : @{/animes/create}" method="post"
+                        id="form-offer" th:object="${anime}" class="mb-2">
+                        <input type="hidden" th:field="*{id}">
 
-
-                    <div class="mb-3">
-                        <label class="form-label" for="title">Titolo</label>
-                        <input class="form-control" type="text" id="title" th:field="*{title}"
-                            th:errorClass="is-invalid">
-                        <div class="invalid-feedback" th:if="${#fields.hasErrors('title')}">
-                            <ul>
-                                <li th:each="error : ${#fields.errors('title')}" th:text="${error}"></li>
-                            </ul>
+                        <!-- Titolo -->
+                        <div class="mb-3">
+                            <label class="form-label text-warning" for="title">Titolo</label>
+                            <input class="form-control bg-dark text-light border-warning" type="text" id="title"
+                                th:field="*{title}" th:errorClass="is-invalid">
                         </div>
-                    </div>
 
-                    <div class="mb-3">
-                        <label class="form-label" for="originalTitle">Titolo Originale</label>
-                        <input class="form-control" type="text" id="originalTitle" th:field="*{originalTitle}"
-                            th:errorClass="is-invalid">
-                        <div class="invalid-feedback" th:if="${#fields.hasErrors('originalTitle')}">
-                            <ul>
-                                <li th:each="error : ${#fields.errors('originalTitle')}" th:text="${error}"></li>
-                            </ul>
+                        <!-- Titolo Originale -->
+                        <div class="mb-3">
+                            <label class="form-label text-warning" for="originalTitle">Titolo Originale</label>
+                            <input class="form-control bg-dark text-light border-warning" type="text" id="originalTitle"
+                                th:field="*{originalTitle}" th:errorClass="is-invalid">
                         </div>
-                    </div>
 
-                    <div class="mb-3">
-                        <label class="form-label" for="description">Descrizione</label>
-                        <textarea class="form-control" id="description" th:field="*{description}"
-                            th:errorClass="is-invalid"></textarea>
-                        <div class="invalid-feedback" th:if="${#fields.hasErrors('description')}">
-                            <ul>
-                                <li th:each="error : ${#fields.errors('description')}" th:text="${error}"></li>
-                            </ul>
+                        <!-- Descrizione -->
+                        <div class="mb-3">
+                            <label class="form-label text-warning" for="description">Descrizione</label>
+                            <textarea class="form-control bg-dark text-light border-warning" id="description"
+                                th:field="*{description}" th:errorClass="is-invalid"></textarea>
                         </div>
-                    </div>
 
-                    <div class="mb-3">
-                        <label class="form-label" for="production">Produzione</label>
-                        <input class="form-control" type="text" id="production" th:field="*{production}"
-                            th:errorClass="is-invalid">
-                        <div class="invalid-feedback" th:if="${#fields.hasErrors('production')}">
-                            <ul>
-                                <li th:each="error : ${#fields.errors('production')}" th:text="${error}"></li>
-                            </ul>
+                        <!-- Produzione -->
+                        <div class="mb-3">
+                            <label class="form-label text-warning" for="production">Produzione</label>
+                            <input class="form-control bg-dark text-light border-warning" type="text" id="production"
+                                th:field="*{production}" th:errorClass="is-invalid">
                         </div>
-                    </div>
 
-                    <div class="mb-3">
-                        <label class="form-label">Generi:</label>
-                        <div>
-                            <th:block th:each="genre : ${genres}">
-                                <input type="checkbox" th:value="${genre.id}" th:field="*{genres}"
-                                    id="genre-+${genre.id}">
-                                <label th:for="'genre-'+${genre.id}" th:text="${genre.name}"></label>
-                            </th:block>
+                        <!-- Generi -->
+<div class="mb-3">
+    <label class="form-label text-warning">Seleziona i generi:</label>
+    <div class="d-flex flex-wrap">
+        <th:block th:each="genre : ${genres}">
+            <input type="checkbox" th:value="${genre.id}" th:field="*{genres}" id="'genre-' + ${genre.id}" class="form-check-input mx-2">
+            <label th:for="'genre-' + ${genre.id}" class="form-check-label text-light">[[${genre.name}]]</label>
+        </th:block>
+    </div>
+</div>
+
+
+                        <!-- Stagioni -->
+                        <div class="mb-3">
+                            <label class="form-label text-warning" for="seasons">Stagioni</label>
+                            <input class="form-control bg-dark text-light border-warning" type="number" id="seasons"
+                                th:field="*{seasons}" th:errorClass="is-invalid">
                         </div>
-                    </div>
 
-                    <div class="mb-3">
-                        <label class="form-label" for="seasons">Stagioni</label>
-                        <input class="form-control" type="number" id="seasons" th:field="*{seasons}"
-                            th:errorClass="is-invalid">
-                        <div class="invalid-feedback" th:if="${#fields.hasErrors('seasons')}">
-                            <ul>
-                                <li th:each="error : ${#fields.errors('seasons')}" th:text="${error}"></li>
-                            </ul>
+                        <!-- Numero Episodio -->
+                        <div class="mb-3">
+                            <label class="form-label text-warning" for="episode">Numero Episodio</label>
+                            <input class="form-control bg-dark text-light border-warning" type="number" id="episode"
+                                th:field="*{episode}" th:errorClass="is-invalid">
                         </div>
-                    </div>
 
-                    <div class="mb-3">
-                        <label class="form-label" for="episode">Numero Episodio</label>
-                        <input class="form-control" type="number" id="episode" th:field="*{episode}"
-                            th:errorClass="is-invalid">
-                        <div class="invalid-feedback" th:if="${#fields.hasErrors('episode')}">
-                            <ul>
-                                <li th:each="error : ${#fields.errors('episode')}" th:text="${error}"></li>
-                            </ul>
+                        <!-- Immagine -->
+                        <div class="mb-3">
+                            <label class="form-label text-warning" for="image">Immagine</label>
+                            <input class="form-control bg-dark text-light border-warning" type="text" id="image"
+                                th:field="*{image}" th:errorClass="is-invalid">
                         </div>
-                    </div>
 
-                    <div class="mb-3">
-                        <label class="form-label" for="image">Immagine</label>
-                        <input class="form-control" type="text" id="image" th:field="*{image}"
-                            th:errorClass="is-invalid">
-                        <div class="invalid-feedback" th:if="${#fields.hasErrors('image')}">
-                            <ul>
-                                <li th:each="error : ${#fields.errors('image')}" th:text="${error}"></li>
-                            </ul>
+                        <div class="d-flex justify-content-center">
+                            <button type="submit" class="btn btn-success fw-bold">Salva</button>
                         </div>
-                    </div>
-
-
-                    <div class="d-flex justify-content-center">
-                        <button type="submit" class="btn btn-primary">Salva</button>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
-        </div>
     </main>
+
+    <div th:insert="fragments/footer :: footer"></div>
 
 
     <!-- Import script Bootstrap -->
