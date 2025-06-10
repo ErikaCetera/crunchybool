@@ -14,7 +14,7 @@ import jakarta.persistence.EntityNotFoundException;
 public class ReviewService {
 
     @Autowired
-    ReviewRepository reviewRepository;
+   private  ReviewRepository reviewRepository;
 
     public List<Review> findAll() {
         return reviewRepository.findAll();

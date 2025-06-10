@@ -44,10 +44,16 @@ public class AnimeController {
     public String show(Model model, @PathVariable("id") Integer id) {
         Anime anime = animeService.getById(id);
         Integer averageRating = reviewService.getAverageRating(anime.getId());
+
+        // Associa l'anime alla review
+        Review review = new Review();
+        review.setAnime(anime);
+
         model.addAttribute("anime", anime);
         model.addAttribute("genres", anime.getGenres());
-        model.addAttribute("review", new Review());
+        model.addAttribute("review", review);
         model.addAttribute("averageRating", averageRating);
+
         return "animes/show";
     }
 

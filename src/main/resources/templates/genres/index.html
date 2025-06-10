@@ -13,14 +13,7 @@
     <main class="container mt-5">
         <div th:insert="fragments/navbar :: navbar"></div>
 
-        <section class="my-4">
-            <div class="d-flex justify-content-between">
-                <form action="/genres/search" method="get" class="d-flex align-items-center">
-                    <input type="text" name="name" placeholder="Cerca genere..." class="form-control bg-dark text-light">
-                    <button type="submit" class="btn btn-outline-light ms-2">Cerca</button>
-                </form>
-            </div>
-        </section>
+        <h2 class="mt-4 text-light">Tutti i generi</h2>
 
         <section class="my-4">
             <div class="col" th:unless="${genres.size() > 0}">

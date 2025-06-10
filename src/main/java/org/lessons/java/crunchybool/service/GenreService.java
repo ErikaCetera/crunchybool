@@ -17,14 +17,10 @@ import jakarta.persistence.EntityNotFoundException;
 public class GenreService {
 
     @Autowired
-    private final AnimeRepository animeRepository;
+    private AnimeRepository animeRepository;
 
     @Autowired
     private GenreRepository genreRepository;
-
-    GenreService(AnimeRepository animeRepository) {
-        this.animeRepository = animeRepository;
-    }
 
     public List<Genre> findAll() {
         return genreRepository.findAll();
@@ -46,9 +42,6 @@ public class GenreService {
         return genreAttempt.get();
     }
 
-    public List<Genre> findByName(String name) {
-        return genreRepository.findByNameContainingIgnoreCase("name");
-    }
 
     public Genre create(Genre genre) {
         return genreRepository.save(genre);
