@@ -60,7 +60,24 @@ public class AnimeController {
     @GetMapping("/search")
     public String searchByName(@RequestParam(name = "name") String name, Model model) {
         List<Anime> animes = animeService.findByName(name);
+
         model.addAttribute("animes", animes);
+        return "animes/index";
+    }
+
+    @GetMapping("/searchByGenre")
+    public String searchByGenre(@RequestParam(name = "genre", required = false) String genreName, Model model) {
+        List<Anime> animes;
+
+        if (genreName == null || genreName.isEmpty()) {
+            animes = animeService.findAllSorteByName();
+        } else {
+            animes = animeService.findByGenre(genreName);
+        }
+
+        model.addAttribute("animes", animes);
+        model.addAttribute("genres", genreService.findAllSorteByName());
+
         return "animes/index";
     }
 
@@ -75,6 +92,7 @@ public class AnimeController {
     @PostMapping("/create")
     public String store(
             @Valid @ModelAttribute("anime") Anime formAnime, BindingResult bindingResult, Model model) {
+
         if (bindingResult.hasErrors()) {
             return "animes/create-or-edit";
         }
@@ -82,6 +100,7 @@ public class AnimeController {
 
         return "redirect:/animes";
     }
+    
 
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable("id") Integer id, Model model) {
@@ -94,6 +113,7 @@ public class AnimeController {
     @PostMapping("/edit/{id}")
     public String update(
             @Valid @ModelAttribute("anime") Anime formAnime, BindingResult bindingResult, Model model) {
+
         if (bindingResult.hasErrors()) {
 
             return "animes/create-or-edit";
@@ -113,10 +133,13 @@ public class AnimeController {
     // anime specifico
     @GetMapping("/{id}/review")
     public String review(@PathVariable Integer id, Model model) {
+
         Review review = new Review();
+
         // Collega l'offerta alla pizza selezionata
         review.setAnime(animeService.getById(id));
         model.addAttribute("review", review);
+
         return "reviews/create-or-edit";
     }
 

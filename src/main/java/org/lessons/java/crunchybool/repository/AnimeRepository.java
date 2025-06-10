@@ -10,5 +10,6 @@ import org.springframework.stereotype.Repository;
 public interface AnimeRepository extends JpaRepository <Anime, Integer>{
 
 public List<Anime> findByTitleContainingIgnoreCaseOrOriginalTitleContainingIgnoreCase(String title, String originalTitle);
+public List<Anime> findByGenres_NameIgnoreCase(String genreName);
 
 }

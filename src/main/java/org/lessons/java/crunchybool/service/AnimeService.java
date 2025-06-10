@@ -50,6 +50,11 @@ public class AnimeService {
     public List<Anime> findByName(String name) {
         return animeRepository.findByTitleContainingIgnoreCaseOrOriginalTitleContainingIgnoreCase(name, name);
     }
+    
+    public List<Anime> findByGenre(String genreName) {
+    return animeRepository.findByGenres_NameIgnoreCase(genreName);
+}
+
 
     // crea nuovo anime
     public Anime create(Anime anime) {

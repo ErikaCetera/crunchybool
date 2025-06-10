@@ -25,7 +25,7 @@
             <div class="col-md-8">
                 <div class="card bg-secondary text-light border-light p-4">
                     <form th:action="${edit} ? @{|/animes/edit/${anime.id}|} : @{/animes/create}" method="post"
-                        id="form-offer" th:object="${anime}" class="mb-2">
+                        id="form-offer" th:object="${anime}" class="mb-2" enctype="multipart/form-data">
                         <input type="hidden" th:field="*{id}">
 
                         <!-- Titolo -->
@@ -57,21 +57,23 @@
                         </div>
 
                         <!-- Generi -->
-<div class="mb-3">
-    <label class="form-label text-warning">Seleziona i generi:</label>
-    <div class="d-flex flex-wrap">
-        <th:block th:each="genre : ${genres}">
-            <input type="checkbox" th:value="${genre.id}" th:field="*{genres}" id="'genre-' + ${genre.id}" class="form-check-input mx-2">
-            <label th:for="'genre-' + ${genre.id}" class="form-check-label text-light">[[${genre.name}]]</label>
-        </th:block>
-    </div>
-</div>
+                        <div class="mb-3">
+                            <label class="form-label text-warning">Seleziona i generi:</label>
+                            <div class="d-flex flex-wrap">
+                                <th:block th:each="genre : ${genres}">
+                                    <input type="checkbox" th:value="${genre.id}" th:field="*{genres}"
+                                        id="'genre-' + ${genre.id}" class="form-check-input mx-2">
+                                    <label th:for="'genre-' + ${genre.id}"
+                                        class="form-check-label text-light">[[${genre.name}]]</label>
+                                </th:block>
+                            </div>
+                        </div>
 
 
                         <!-- Stagioni -->
                         <div class="mb-3">
                             <label class="form-label text-warning" for="seasons">Stagioni</label>
-                            <input class="form-control bg-dark text-light border-warning" type="number" id="seasons"
+                            <input class="form-control bg-dark text-light border-warning " type="number" id="seasons"
                                 th:field="*{seasons}" th:errorClass="is-invalid">
                         </div>
 
@@ -85,8 +87,8 @@
                         <!-- Immagine -->
                         <div class="mb-3">
                             <label class="form-label text-warning" for="image">Immagine</label>
-                            <input class="form-control bg-dark text-light border-warning" type="text" id="image"
-                                th:field="*{image}" th:errorClass="is-invalid">
+                            <input class="form-control bg-dark text-light border-warning" type="file" id="image"
+                                name="imageFile" accept="image/*">
                         </div>
 
                         <div class="d-flex justify-content-center">
