@@ -16,7 +16,7 @@
         <div class="d-flex justify-content-between my-4">
             <!-- Ricerca per titolo -->
             <form action="/animes/search" method="get" class="d-flex align-items-center">
-                <input type="text" name="name" placeholder="Cerca per titolo..."
+                <input type="text" name="name"  autocomplete="off" placeholder="Cerca per titolo..."
                     class="form-control bg-dark text-light">
 
 
@@ -43,7 +43,7 @@
         <div class="row" th:if="${animes.size() > 0}">
             <div class="col-lg-3 col-md-6 col-12 g-3" th:each="anime : ${animes}">
                 <div class="card h-100 mx-auto bg-secondary text-light">
-                    <img th:src="${anime.image}" class="card-img-top" th:alt="${anime.title}"
+                    <img th:src="@{/{image}(image=${anime.image})}" class="card-img-top" th:alt="${anime.title}"
                         style="max-height: 400px;" />
                     <div class="card-body">
                         <h4 th:text="${anime.title}"></h4>

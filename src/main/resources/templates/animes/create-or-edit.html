@@ -12,6 +12,7 @@
 <body class="bg-dark text-light">
     <main class="container mt-5">
         <div th:insert="fragments/navbar :: navbar"></div>
+        <div th:insert="fragments/go-back :: go-back"></div>
 
         <!-- Titolo dinamico -->
         <div class="my-5 text-center" th:if="${edit}">
@@ -30,31 +31,51 @@
 
                         <!-- Titolo -->
                         <div class="mb-3">
-                            <label class="form-label text-warning" for="title">Titolo</label>
+                            <label class="form-label text-warning" for="title">Titolo*</label>
                             <input class="form-control bg-dark text-light border-warning" type="text" id="title"
                                 th:field="*{title}" th:errorClass="is-invalid">
+                            <div class="invalid-feedback text-white" th:if="${#fields.hasErrors('title')}">
+                                <ul>
+                                    <li th:each="error : ${#fields.errors('title')}" th:text="${error}"></li>
+                                </ul>
+                            </div>
                         </div>
 
                         <!-- Titolo Originale -->
                         <div class="mb-3">
-                            <label class="form-label text-warning" for="originalTitle">Titolo Originale</label>
+                            <label class="form-label text-warning" for="originalTitle">Titolo Originale*</label>
                             <input class="form-control bg-dark text-light border-warning" type="text" id="originalTitle"
                                 th:field="*{originalTitle}" th:errorClass="is-invalid">
+                            <div class="invalid-feedback text-white" th:if="${#fields.hasErrors('originalTitle')}">
+                                <ul>
+                                    <li th:each="error : ${#fields.errors('originalTitle')}" th:text="${error}"></li>
+                                </ul>
+                            </div>
                         </div>
 
                         <!-- Descrizione -->
                         <div class="mb-3">
-                            <label class="form-label text-warning" for="description">Descrizione</label>
+                            <label class="form-label text-warning" for="description">Descrizione*</label>
                             <textarea class="form-control bg-dark text-light border-warning" id="description"
                                 th:field="*{description}" th:errorClass="is-invalid"></textarea>
+                            <div class="invalid-feedback text-white" th:if="${#fields.hasErrors('description')}">
+                                <ul>
+                                    <li th:each="error : ${#fields.errors('description')}" th:text="${error}"></li>
+                                </ul>
+                            </div>
                         </div>
 
                         <!-- Produzione -->
                         <div class="mb-3">
-                            <label class="form-label text-warning" for="production">Produzione</label>
+                            <label class="form-label text-warning" for="production">Produzione*</label>
                             <input class="form-control bg-dark text-light border-warning" type="text" id="production"
                                 th:field="*{production}" th:errorClass="is-invalid">
-                        </div>
+                                <div class="invalid-feedback text-white" th:if="${#fields.hasErrors('production')}">
+                                <ul>
+                                    <li th:each="error : ${#fields.errors('production')}" th:text="${error}"></li>
+                                </ul>
+                            </div>
+</div>
 
                         <!-- Generi -->
                         <div class="mb-3">
@@ -72,16 +93,26 @@
 
                         <!-- Stagioni -->
                         <div class="mb-3">
-                            <label class="form-label text-warning" for="seasons">Stagioni</label>
+                            <label class="form-label text-warning" for="seasons">Stagioni*</label>
                             <input class="form-control bg-dark text-light border-warning " type="number" id="seasons"
                                 th:field="*{seasons}" th:errorClass="is-invalid">
+                                <div class="invalid-feedback text-white" th:if="${#fields.hasErrors('seasons')}">
+                                <ul>
+                                    <li th:each="error : ${#fields.errors('seasons')}" th:text="${error}"></li>
+                                </ul>
+                            </div>
                         </div>
 
                         <!-- Numero Episodio -->
                         <div class="mb-3">
-                            <label class="form-label text-warning" for="episode">Numero Episodio</label>
+                            <label class="form-label text-warning" for="episode">Numero Episodio*</label>
                             <input class="form-control bg-dark text-light border-warning" type="number" id="episode"
                                 th:field="*{episode}" th:errorClass="is-invalid">
+                                <div class="invalid-feedback text-white" th:if="${#fields.hasErrors('episode')}">
+                                <ul>
+                                    <li th:each="error : ${#fields.errors('episode')}" th:text="${error}"></li>
+                                </ul>
+                            </div>
                         </div>
 
                         <!-- Immagine -->
