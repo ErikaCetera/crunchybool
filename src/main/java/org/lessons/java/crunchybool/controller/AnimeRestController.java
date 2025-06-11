@@ -8,6 +8,7 @@ import org.lessons.java.crunchybool.service.AnimeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,10 +16,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/animes")
+@CrossOrigin(origins = "http://localhost:5173")
 public class AnimeRestController {
 
     @Autowired
@@ -27,6 +30,26 @@ public class AnimeRestController {
     @GetMapping
     public List<Anime> index() {
         return animeService.findAllSorteByName();
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<Anime>> searchByName(@RequestParam(name = "name", required = false) String name) {
+        if (name == null || name.isEmpty()) {
+            return new ResponseEntity<>(animeService.findAllSorteByName(), HttpStatus.OK);
+        }
+
+        List<Anime> animes = animeService.findByName(name);
+        return new ResponseEntity<>(animes, HttpStatus.OK);
+    }
+
+    @GetMapping("/searchByGenre")
+    public ResponseEntity<List<Anime>> searchByGenre(@RequestParam(name = "genre", required = false) String genreName) {
+        if (genreName == null || genreName.isEmpty()) {
+            return new ResponseEntity<>(animeService.findAllSorteByName(), HttpStatus.OK);
+        }
+
+        List<Anime> animes = animeService.findByGenre(genreName);
+        return new ResponseEntity<>(animes, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
@@ -48,7 +71,7 @@ public class AnimeRestController {
         if (animeService.findById(id).isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        
+
         anime.setId(id);
         return new ResponseEntity<>(animeService.update(anime), HttpStatus.OK);
     }
@@ -58,9 +81,8 @@ public class AnimeRestController {
         if (animeService.findById(id).isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        
+
         animeService.deleteById(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
-

@@ -8,11 +8,14 @@ import jakarta.validation.Valid;
 import java.util.List;
 
 import org.lessons.java.crunchybool.model.Anime;
+import org.lessons.java.crunchybool.model.Genre;
 import org.lessons.java.crunchybool.model.Review;
 import org.lessons.java.crunchybool.service.AnimeService;
 import org.lessons.java.crunchybool.service.GenreService;
 import org.lessons.java.crunchybool.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -35,7 +38,8 @@ public class AnimeController {
     @GetMapping
     public String index(Model model) {
         List<Anime> animes = animeService.findAllSorteByName();
-
+        List<Genre> genres = genreService.findAll();
+        model.addAttribute("genres", genres);
         model.addAttribute("animes", animes);
         return "animes/index";
     }
@@ -58,8 +62,14 @@ public class AnimeController {
     }
 
     @GetMapping("/search")
-    public String searchByName(@RequestParam(name = "name") String name, Model model) {
-        List<Anime> animes = animeService.findByName(name);
+    public String searchByName(@RequestParam(name = "name", required = false) String name, Model model) {
+        List<Anime> animes;
+
+        if (name == null || name.isEmpty()) {
+            animes = animeService.findAllSorteByName();
+        } else {
+            animes = animeService.findByName(name);
+        }
 
         model.addAttribute("animes", animes);
         return "animes/index";
@@ -100,10 +110,10 @@ public class AnimeController {
 
         return "redirect:/animes";
     }
-    
 
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable("id") Integer id, Model model) {
+
         model.addAttribute("anime", animeService.getById(id));
         model.addAttribute("edit", true);
 
@@ -124,6 +134,7 @@ public class AnimeController {
 
     @PostMapping("/delete/{id}")
     public String delete(@PathVariable Integer id) {
+
         Anime anime = animeService.getById(id);
         animeService.delete(anime);
         return "redirect:/animes";
