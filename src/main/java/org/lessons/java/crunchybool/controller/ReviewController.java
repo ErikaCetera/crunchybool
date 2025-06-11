@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-
 import jakarta.validation.Valid;
 
 @Controller
@@ -27,6 +26,7 @@ public class ReviewController {
     @Autowired
     private AnimeService animeService;
 
+    // Salva una nuova recensione dopo la validazione e la associa a un anime.
     @PostMapping("/create")
     public String store(@Valid @ModelAttribute("review") Review formReview, BindingResult bindingResult) {
 
@@ -38,16 +38,21 @@ public class ReviewController {
         formReview.setAnime(anime);
 
         reviewService.create(formReview);
+
         return "redirect:/animes/" + anime.getId();
     }
 
+    // Carica il form di modifica per una recensione esistente
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable Integer id, Model model) {
+
         model.addAttribute("review", reviewService.getById(id));
         model.addAttribute("edit", true);
+
         return "/reviews/create-or-edit";
     }
 
+    // Aggiorna una recensione dopo la validazione
     @PostMapping("/edit/{id}")
     public String update(
             @Valid @ModelAttribute("review") Review formReview, BindingResult bindingResult, Model model) {
@@ -56,13 +61,17 @@ public class ReviewController {
             return "/reviews/create-or-edit";
         }
         reviewService.update(formReview);
+
         return "redirect:/animes/" + formReview.getAnime().getId();
     }
 
+    // Elimina una recensione
     @PostMapping("/delete/{id}")
     public String delete(@PathVariable Integer id) {
+
         Review review = reviewService.getById(id);
         reviewService.delete(review);
+
         return "redirect:/animes/" + review.getAnime().getId();
     }
 

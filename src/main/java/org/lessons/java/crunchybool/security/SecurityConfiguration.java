@@ -12,6 +12,7 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+//Configura la sicurezza HTTP in Spring Security, gestendo autenticazione, autorizzazioni e protezione CSRF
 @Configuration
 public class SecurityConfiguration {
     @Bean
@@ -32,6 +33,8 @@ public class SecurityConfiguration {
         return http.build();
     }
 
+    // Configura il provider di autenticazione usando DAO per recuperare gli utenti
+    // dal database
     @Bean
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
@@ -40,11 +43,13 @@ public class SecurityConfiguration {
         return authProvider;
     }
 
+    // Carica i dettagli utente utilizzando la classe DatabaseUserDetailsService
     @Bean
     public UserDetailsService userDetailsService() {
         return new DatabaseUserDetailsService();
     }
 
+    // Crea un encoder per gestire la sicurezza delle password
     @Bean
     public PasswordEncoder passwordEncoder() {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();

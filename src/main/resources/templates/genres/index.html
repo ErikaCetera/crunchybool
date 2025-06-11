@@ -15,6 +15,7 @@
 
         <h2 class="mt-4 text-light">Tutti i generi</h2>
 
+        <!-- form per nuovo genere -->
         <section class="card bg-secondary p-3 text-light my-4">
             <h4 class="my-4">Inserisci un nuovo genere</h4>
 
@@ -32,6 +33,7 @@
             </form>
         </section>
 
+        <!-- lista generi -->
         <section class="my-4">
             <div class="col" th:unless="${genres.size() > 0}">
                 <h5>Nessun genere presente</h5>

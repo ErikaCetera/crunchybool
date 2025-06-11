@@ -1,6 +1,5 @@
 package org.lessons.java.crunchybool.security;
 
-
 import java.util.HashSet;
 import java.util.Set;
 
@@ -17,14 +16,16 @@ public class DatabaseUserDetails implements UserDetails {
     private final String password;
     private final Set<GrantedAuthority> authorities;
 
-    public DatabaseUserDetails(User user){
+    // Costruttore che inizializza i dati utente e assegna le autorizzazioni
+    public DatabaseUserDetails(User user) {
         this.id = user.getId();
         this.username = user.getUsername();
         this.password = user.getPassword();
         this.authorities = new HashSet<GrantedAuthority>();
 
-        //per ogni ruolo presente in user crea un relativo permesso con quel nome
-        for(Role userRole : user.getRoles()){
+        // Per ogni ruolo presente in user.getRoles(), crea un permesso con il nome del
+        // ruolo e lo aggiunge a authorities.
+        for (Role userRole : user.getRoles()) {
             authorities.add(new SimpleGrantedAuthority(userRole.getName()));
         }
 
@@ -46,27 +47,27 @@ public class DatabaseUserDetails implements UserDetails {
         return authorities;
     }
 
-    //non scade mai
+    // non scade mai
     @Override
-    public boolean isAccountNonExpired(){
+    public boolean isAccountNonExpired() {
         return true;
     }
 
-    //non è mai bloccato
+    // non è mai bloccato
     @Override
-    public boolean isAccountNonLocked(){
+    public boolean isAccountNonLocked() {
         return true;
     }
 
     // le credenziali non scadono
     @Override
-    public boolean isCredentialsNonExpired(){
+    public boolean isCredentialsNonExpired() {
         return true;
     }
 
-    //sempre abilitato
+    // sempre abilitato
     @Override
-    public boolean isEnabled(){
+    public boolean isEnabled() {
         return true;
     }
 

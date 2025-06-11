@@ -24,16 +24,19 @@ public class GenreRestController {
     @Autowired
     private GenreService genreService;
 
+    //Restituisce la lista di tutti i generi.
     @GetMapping
     public List<Genre> index() {
         return genreService.findAll();
     }
 
+    //Crea un nuovo genere e lo salva nel database
     @PostMapping
     public ResponseEntity<Genre> store(@RequestBody Genre genre) {
         return new ResponseEntity<>(genreService.create(genre), HttpStatus.CREATED);
     }
 
+    //Elimina un genere se esiste
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Integer id) {
         if (genreService.findById(id).isEmpty()) {

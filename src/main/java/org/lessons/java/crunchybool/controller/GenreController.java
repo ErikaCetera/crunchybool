@@ -21,18 +21,21 @@ public class GenreController {
     @Autowired
     private GenreService genreService;
 
+    //Recupera la lista di tutti i generi e li passa alla vista
     @GetMapping
     public String index(Model model) {
         model.addAttribute("genres", genreService.findAll());
         return "genres/index";
     }
 
+    //Mostra il form per creare un nuovo genere
     @GetMapping("/create")
     public String create(Model model) {
         model.addAttribute("genre", new Genre());
         return "genres/create";
     }
 
+    //Salva il genere dopo la validazione
     @PostMapping("/create")
     public String store(
             @Valid @ModelAttribute("gener") Genre formGenre, BindingResult bindingResult, Model model) {
@@ -44,6 +47,7 @@ public class GenreController {
         return "redirect:/genres";
     }
 
+    // Elimina anime dal db se esite
     @PostMapping("delete/{id}")
     public String delete(@PathVariable Integer id) {
         genreService.deleteById(id);

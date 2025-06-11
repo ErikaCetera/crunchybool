@@ -22,18 +22,22 @@ public class GenreService {
     @Autowired
     private GenreRepository genreRepository;
 
+    // Restituisce la lista di tutti i generi 
     public List<Genre> findAll() {
         return genreRepository.findAll();
     }
 
+    // Restituisce la lista di tutti i generi ordinati
     public List<Genre> findAllSorteByName() {
         return genreRepository.findAll(Sort.by("name"));
     }
 
+    // Cerca un genere per id
     public Optional<Genre> findById(Integer id) {
         return genreRepository.findById(id);
     }
 
+    // Restituisce un genere per id
     public Genre getById(Integer id) {
         Optional<Genre> genreAttempt = genreRepository.findById(id);
         if (genreAttempt.isEmpty()) {
@@ -42,11 +46,12 @@ public class GenreService {
         return genreAttempt.get();
     }
 
-
+    // Crea un nuovo genere
     public Genre create(Genre genre) {
         return genreRepository.save(genre);
     }
 
+    // Elimina un genere dal database per ID, rimuovendo anche il riferimento dagli anime associati
     public void deleteById(Integer id) {
         Genre genre = getById(id);
         for (Anime anime : genre.getAnimes()) {

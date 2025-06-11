@@ -27,11 +27,13 @@ public class AnimeRestController {
     @Autowired
     private AnimeService animeService;
 
+    // Recupera lista degli anime ordinata
     @GetMapping
     public List<Anime> index() {
         return animeService.findAllSorteByName();
     }
 
+    //Cerca per titolo
     @GetMapping("/search")
     public ResponseEntity<List<Anime>> searchByName(@RequestParam(name = "name", required = false) String name) {
         if (name == null || name.isEmpty()) {
@@ -42,6 +44,7 @@ public class AnimeRestController {
         return new ResponseEntity<>(animes, HttpStatus.OK);
     }
 
+    //Filtra per genere
     @GetMapping("/searchByGenre")
     public ResponseEntity<List<Anime>> searchByGenre(@RequestParam(name = "genre", required = false) String genreName) {
         if (genreName == null || genreName.isEmpty()) {
@@ -52,6 +55,7 @@ public class AnimeRestController {
         return new ResponseEntity<>(animes, HttpStatus.OK);
     }
 
+    //Restituisce i dettagli di un singolo anime tramite il suo ID
     @GetMapping("/{id}")
     public ResponseEntity<Anime> show(@PathVariable Integer id) {
         Optional<Anime> anime = animeService.findById(id);
@@ -61,11 +65,13 @@ public class AnimeRestController {
         return new ResponseEntity<>(anime.get(), HttpStatus.OK);
     }
 
+    //Crea un nuovo anime e lo salva nel database
     @PostMapping
     public ResponseEntity<Anime> store(@RequestBody Anime anime) {
         return new ResponseEntity<>(animeService.create(anime), HttpStatus.CREATED);
     }
 
+    //Aggiorna i dati di un anime esistente
     @PutMapping("/{id}")
     public ResponseEntity<Anime> update(@PathVariable Integer id, @RequestBody Anime anime) {
         if (animeService.findById(id).isEmpty()) {
@@ -76,6 +82,7 @@ public class AnimeRestController {
         return new ResponseEntity<>(animeService.update(anime), HttpStatus.OK);
     }
 
+    //Elimina un anime dal database se esiste
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Integer id) {
         if (animeService.findById(id).isEmpty()) {

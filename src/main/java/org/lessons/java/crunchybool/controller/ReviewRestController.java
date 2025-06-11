@@ -25,16 +25,19 @@ public class ReviewRestController {
     @Autowired
     private ReviewService reviewService;
 
+    //Restituisce la lista di tutte le recensioni.
     @GetMapping
     public List<Review> index() {
         return reviewService.findAll();
     }
-
+    
+    //Crea e salva una nuova recensione nel database
     @PostMapping
     public ResponseEntity<Review> store(@RequestBody Review review) {
         return new ResponseEntity<>(reviewService.create(review), HttpStatus.CREATED);
     }
 
+    //Elimina una recensione se esiste
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Integer id) {
         if (reviewService.findById(id).isEmpty()) {

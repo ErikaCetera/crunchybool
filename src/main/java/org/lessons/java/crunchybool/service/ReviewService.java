@@ -16,22 +16,27 @@ public class ReviewService {
     @Autowired
     private  ReviewRepository reviewRepository;
 
+    // Restituisce la lista di tutte le recensioni presenti nel database
     public List<Review> findAll() {
         return reviewRepository.findAll();
     }
 
+    // Cerca una recensione per ID
     public Optional<Review> findById(Integer id) {
         return reviewRepository.findById(id);
     }
 
+     // Crea una nuova recensione e la salva nel database
     public Review create(Review offer) {
         return reviewRepository.save(offer);
     }
 
+    // Aggiorna una recensione
     public Review update(Review offer) {
         return reviewRepository.save(offer);
     }
 
+    // Recupera una recensione per ID
     public Review getById(Integer id) {
         Optional<Review> reviewAttempt = reviewRepository.findById(id);
         if (reviewAttempt.isEmpty()) {
@@ -40,14 +45,17 @@ public class ReviewService {
         return reviewAttempt.get();
     }
 
+    // Calcola il voto medio delle recensioni per un determinato anime
     public Integer getAverageRating(Integer animeId) {
         return reviewRepository.findAverageRatingByAnimeId(animeId);
     }
 
+    // Elimina una recensione dal database per ID
     public void deleteById(Integer id) {
         reviewRepository.deleteById(id);
     }
 
+    // Elimina una recensione utilizzando il suo ID
     public void delete(Review review) {
         deleteById(review.getId());
 

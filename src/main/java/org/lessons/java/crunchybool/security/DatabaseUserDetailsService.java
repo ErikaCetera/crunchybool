@@ -20,11 +20,13 @@ public class DatabaseUserDetailsService implements UserDetailsService{
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
+    // Cerca l'utente nel database tramite il nome utente
     Optional<User> userAttempt = userRepository.findByUsername(username);
 
     if(userAttempt.isEmpty()){
         throw new UsernameNotFoundException("Utente non trovato: " + username);
     }
+    // Se esiste crea un oggetto UserDetails con le sue informazioni
     return new DatabaseUserDetails(userAttempt.get());
     }
     
