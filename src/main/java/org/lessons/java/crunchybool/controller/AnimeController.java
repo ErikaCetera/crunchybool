@@ -118,6 +118,7 @@ public class AnimeController {
     public String edit(@PathVariable("id") Integer id, Model model) {
 
         model.addAttribute("anime", animeService.getById(id));
+        model.addAttribute("genres", genreService.findAllSorteByName());
         model.addAttribute("edit", true);
 
         return "animes/create-or-edit";

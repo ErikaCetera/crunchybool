@@ -63,6 +63,12 @@ public class AnimeService {
 
     // aggiorna anime
     public Anime update(Anime anime) {
+    Anime existingAnime = getById(anime.getId());
+
+    // Mantiene l'immagine precedente se quella nuova è null o vuota
+    if (anime.getImage() == null || anime.getImage().isEmpty()) {
+        anime.setImage(existingAnime.getImage());
+    }
         return animeRepository.save(anime);
     }
 
