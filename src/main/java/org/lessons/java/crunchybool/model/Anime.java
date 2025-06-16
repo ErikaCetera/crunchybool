@@ -3,8 +3,6 @@ package org.lessons.java.crunchybool.model;
 import java.util.List;
 
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 
 import jakarta.persistence.Id;
 import jakarta.persistence.Column;
@@ -50,7 +48,7 @@ public class Anime {
 
     //relazione con recensioni
     @OneToMany(mappedBy = "anime")
-    @JsonManagedReference
+    
     private List<Review> reviews;
 
     //relazione con generi
@@ -60,7 +58,7 @@ public class Anime {
         joinColumns = @JoinColumn( name = "anime_id"),
         inverseJoinColumns = @JoinColumn( name = "genre_id")
         )
-    @JsonManagedReference
+    
     private List<Genre> genres;
 
 
